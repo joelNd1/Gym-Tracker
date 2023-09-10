@@ -30,13 +30,8 @@ app.post("/insert", async (req, res) => {
 
 app.get("/read", async (req, res) => {
 
-    GymTracker.find({},(err, result) => {                       
-        if (err) {
-            res.send(err)
-        }
-        res.send(result);
-    
-    })
+    const sessions = await GymTrackerModel.find();
+       res.send(sessions);
 });
 
 app.listen(3001, ()=> {
