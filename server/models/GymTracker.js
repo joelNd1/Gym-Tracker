@@ -7,11 +7,7 @@ DayType: {
 Date: {
     type: Date,
     require: true,
-},
-BPM: {
-    type: Number,
-    require: true,
-},
+}
 });
 
 const GymTracker = mongoose.model("GymSession",GymTrackerschema)

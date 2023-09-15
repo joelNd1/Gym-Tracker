@@ -15,9 +15,7 @@ app.post("/insert", async (req, res) => {
 
     const trainingType = req.body.trainingType
     const trainingDate = req.body.trainingDate
-    const averageBPM = req.body.averageBPM
-
-    const GymTracker = new GymTrackerModel({DayType:trainingType, Date:trainingDate, BPM: averageBPM });
+    const GymTracker = new GymTrackerModel({DayType:trainingType, Date:trainingDate });
 
     try {
         await GymTracker.save();
@@ -27,6 +25,32 @@ app.post("/insert", async (req, res) => {
     }
  
 });
+app.put("/update", async (req, res) => {
+    const newTrainingType = req.body.newTrainingType;
+    const id = req.body.id;
+  
+    try {
+      const updatedTrainingType = await GymTrackerModel.findByIdAndUpdate(id, { DayType: newTrainingType });
+  
+      if (!updatedTrainingType) {
+        return res.status(404).send("Training type not found");
+      }
+  
+      res.send("Training type updated successfully");
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Error updating training type");
+    }
+  });
+
+app.delete("/delete/:id", async (req, res)=>{
+    const id = req.params.id;
+
+    await GymTrackerModel.findByIdAndRemove(id).exec();
+    res.send("deleted");
+
+});
+  
 
 app.get("/read", async (req, res) => {
 
